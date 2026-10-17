@@ -1,0 +1,26 @@
+# dependencies
+node_modules
+.pnp
+.pnp.*
+
+# next.js
+.next
+out
+next-env.d.ts
+
+# testing
+coverage
+playwright-report
+test-results
+
+# env files (never commit secrets; keep .env.example up to date)
+.env
+.env.*
+!.env.example
+
+# misc
+.DS_Store
+*.tsbuildinfo
+.vercel
+npm-debug.log*
+pnpm-debug.log*

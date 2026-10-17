@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Deep Semantic: с чего начать</title>
+<style>
+body{font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;max-width:46rem;margin:2rem auto;padding:0 1rem;color:#1d2330}
+h1{font-size:1.8rem}h2{margin-top:2rem;border-bottom:1px solid #dde;padding-bottom:.25rem}
+pre{background:#f3f4f8;padding:1rem;border-radius:8px;overflow:auto}code{font-family:ui-monospace,Consolas,monospace;font-size:.92em}
+:not(pre)>code{background:#f3f4f8;padding:.1em .35em;border-radius:4px}
+@media(prefers-color-scheme:dark){body{background:#14161c;color:#e8eaf0}pre,:not(pre)>code{background:#232733}h2{border-color:#333a4d}a{color:#9db4ff}}
+</style></head><body><h1>Deep Semantic (deepsemantic.ru): с чего начать</h1>
+<p>Это проект Phase 0 (фундамент). Сайт пока пустая заглушка. Подробная инструкция на английском лежит в файле <code>README.md</code> (его можно открыть любым текстовым редактором, например Блокнотом).</p>
+<h2>1. Распакуйте архив</h2>
+<p>Правый клик на <code>deepsemantic-phase0.zip</code> → «Извлечь всё». Дальше работаем внутри папки <code>deepsemantic</code>.</p>
+<h2>2. Установите три бесплатные программы (один раз)</h2>
+<ol>
+<li><strong>Node.js 22 LTS</strong>: <a href="https://nodejs.org">https://nodejs.org</a></li>
+<li><strong>Git</strong>: <a href="https://git-scm.com">https://git-scm.com</a></li>
+<li><strong>pnpm</strong>: откройте терминал (на Windows: PowerShell) и выполните <code>corepack enable pnpm</code></li>
+</ol>
+<h2>3. Запустите проект</h2>
+<p>Откройте терминал внутри папки <code>deepsemantic</code> (на Windows: правый клик по пустому месту в папке → «Открыть в терминале») и выполняйте команды по порядку:</p>
+<pre><code>git init
+pnpm install
+pnpm format
+pnpm check
+pnpm dev
+</code></pre>
+<ul>
+<li><code>git init</code> включает историю изменений (обязательно до <code>pnpm install</code>).</li>
+<li><code>pnpm install</code> скачивает библиотеки.</li>
+<li><code>pnpm format</code> один раз приводит файлы к единому виду.</li>
+<li><code>pnpm check</code> проверяет код. В конце всё должно быть без ошибок.</li>
+<li><code>pnpm dev</code> запускает сайт. Откройте <a href="http://localhost:3000">http://localhost:3000</a> в браузере.</li>
+</ul>
+<p>Если какая-то команда выдала ошибку, скопируйте весь текст ошибки и пришлите мне.</p>
+<h2>4. Положите свой план в проект</h2>
+<p>Скопируйте исходный Word-файл плана в папку <code>docs</code> и назовите его <code>PLAN.docx</code>.</p>
+<h2>5. Сохраните работу на GitHub</h2>
+<pre><code>git add .
+git commit -m &quot;chore: phase 0 foundation&quot;
+</code></pre>
+<p>Затем создайте пустой репозиторий на <a href="https://github.com">https://github.com</a> и выполните две команды, которые GitHub покажет на странице репозитория. Файл <code>pnpm-lock.yaml</code> тоже нужно закоммитить, он нужен для автоматических проверок.</p>
+<h2>6. Что дальше</h2>
+<ul>
+<li>База данных (Neon или Supabase): понадобится с Phase 1, подробности в <code>README.md</code>.</li>
+<li>Публикация на Vercel: тоже описана в <code>README.md</code>.</li>
+<li><strong>Важно:</strong> прочитайте <code>docs/adr/0002-hosting-region-and-payments.md</code>. Из-за домена .ru нужно решить, где хранить персональные данные посетителей и каким платёжным сервисом пользоваться (Stripe для России не подходит).</li>
+</ul>
+<p>Когда <code>pnpm check</code> пройдёт без ошибок, напишите мне, и перейдём к Phase 1.</p>
+</body></html>
