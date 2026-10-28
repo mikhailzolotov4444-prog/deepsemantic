@@ -60,7 +60,7 @@ test.describe("languages", () => {
   test("the switcher opens the same page in the other language", async ({ page }) => {
     await page.goto("/ru/about");
     await expect(page.locator("html")).toHaveAttribute("lang", "ru");
-    await page.getByRole("link", { name: /Язык: English/ }).click();
+    await page.getByRole("link", { name: "English" }).click();
     await expect(page).toHaveURL(/\/en\/about$/);
     await expect(page.locator("html")).toHaveAttribute("lang", "en");
   });

@@ -21,10 +21,10 @@ export function LanguageSwitcher({ current, label }: LanguageSwitcherProps) {
       href={switchLocaleInPath(pathname, target)}
       hrefLang={target}
       lang={target}
-      aria-label={`${label}: ${names[target]}`}
-      className="inline-flex min-h-9 items-center rounded-md px-2 text-sm uppercase text-muted-foreground hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+      title={label}
+      className="inline-flex min-h-9 items-center rounded-md px-2 text-sm text-muted-foreground hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
     >
-      {target}
+      {names[target]}
     </Link>
   );
 }
