@@ -40,6 +40,45 @@ describe("parseEnv", () => {
   });
 });
 
+describe("parseEnv: contact form settings", () => {
+  it("leaves every contact setting unset by default", () => {
+    const env = parseEnv({});
+    expect(env.CONTACT_TO_EMAIL).toBeUndefined();
+    expect(env.CONTACT_FROM_EMAIL).toBeUndefined();
+    expect(env.RESEND_API_KEY).toBeUndefined();
+    expect(env.TURNSTILE_SECRET_KEY).toBeUndefined();
+    expect(env.NEXT_PUBLIC_TURNSTILE_SITE_KEY).toBeUndefined();
+    expect(env.CONTACT_DEV_MODE).toBe(false);
+  });
+
+  it("reads the contact settings", () => {
+    const env = parseEnv({
+      CONTACT_TO_EMAIL: "owner@example.com",
+      CONTACT_FROM_EMAIL: "Deep Semantic <site@example.com>",
+      RESEND_API_KEY: "re_123",
+      TURNSTILE_SECRET_KEY: "secret",
+      NEXT_PUBLIC_TURNSTILE_SITE_KEY: "site",
+      CONTACT_DEV_MODE: "true",
+    });
+    expect(env.CONTACT_TO_EMAIL).toBe("owner@example.com");
+    expect(env.CONTACT_FROM_EMAIL).toBe("Deep Semantic <site@example.com>");
+    expect(env.RESEND_API_KEY).toBe("re_123");
+    expect(env.TURNSTILE_SECRET_KEY).toBe("secret");
+    expect(env.NEXT_PUBLIC_TURNSTILE_SITE_KEY).toBe("site");
+    expect(env.CONTACT_DEV_MODE).toBe(true);
+  });
+
+  it("treats empty values like missing ones", () => {
+    const env = parseEnv({ CONTACT_TO_EMAIL: "", RESEND_API_KEY: "" });
+    expect(env.CONTACT_TO_EMAIL).toBeUndefined();
+    expect(env.RESEND_API_KEY).toBeUndefined();
+  });
+
+  it("rejects an owner address that is not an email", () => {
+    expect(() => parseEnv({ CONTACT_TO_EMAIL: "not-an-email" })).toThrow(/CONTACT_TO_EMAIL/);
+  });
+});
+
 describe("requireDatabaseUrl", () => {
   it("returns the URL when it is configured", () => {
     const env = parseEnv({ DATABASE_URL: "postgres://u:p@localhost:5432/db" });

@@ -24,5 +24,7 @@ export default defineConfig({
     url: `http://localhost:${port}`,
     reuseExistingServer: !isCI,
     timeout: 180_000,
+    // Lets the contact form work in tests without real email or spam-check accounts.
+    env: { CONTACT_DEV_MODE: "true" },
   },
 });

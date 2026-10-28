@@ -7,14 +7,14 @@ import { Button } from "./button";
  * Icons are swapped with the `dark:` CSS variant instead of React state, so the server and
  * client render identical HTML (no hydration mismatch, no flicker).
  */
-export function ThemeToggle() {
+export function ThemeToggle({ label }: { label: string }) {
   const { resolvedTheme, setTheme } = useTheme();
 
   return (
     <Button
       variant="outline"
       size="icon"
-      aria-label="Toggle dark mode"
+      aria-label={label}
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
     >
       <svg

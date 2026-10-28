@@ -3,7 +3,7 @@
 A website that looks like a normal site and behaves like an app: profile, documents library,
 products and a private admin area. Built phase by phase from `docs/PLAN.docx`.
 
-**Status: Phase 0 (Foundation).** The site is an empty placeholder page. Nothing else exists yet.
+**Status: Phase 1 (public profile).** Russian and English site with Home, About, Contact (form + email), Privacy and Terms. Name, biography, photo, logo and colours are placeholders to be replaced later.
 
 ## First-time setup (about 20 minutes)
 

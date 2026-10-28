@@ -1,5 +1,14 @@
 import { z } from "zod";
 
+/** Treats an empty value (`NAME=` in a .env file) the same as a missing one. */
+const optional = <T extends z.ZodType>(schema: T) =>
+  z.preprocess((value) => (value === "" ? undefined : value), schema.optional());
+
+const flag = z
+  .enum(["true", "false"])
+  .default("false")
+  .transform((value) => value === "true");
+
 /**
  * All environment variables the app understands, validated once.
  * Add new variables here AND in .env.example. Secrets are never exposed to the browser:
@@ -14,16 +23,25 @@ const envSchema = z.object({
     .transform((value) => value.replace(/\/+$/, "")),
 
   // Strings because env vars always are; converted to a real boolean here.
-  NEXT_PUBLIC_ALLOW_INDEXING: z
-    .enum(["true", "false"])
-    .default("false")
-    .transform((value) => value === "true"),
+  NEXT_PUBLIC_ALLOW_INDEXING: flag,
 
   // Optional so the site can be built and deployed before a database exists (Phase 0).
   DATABASE_URL: z
     .string()
     .regex(/^postgres(ql)?:\/\//, "must start with postgres:// or postgresql://")
     .optional(),
+
+  // Contact form (Phase 1). It goes live only when ALL of these are set:
+  // Resend (email) + Turnstile (spam protection).
+  CONTACT_TO_EMAIL: optional(z.email()),
+  CONTACT_FROM_EMAIL: optional(z.string().min(3)),
+  RESEND_API_KEY: optional(z.string().min(1)),
+  TURNSTILE_SECRET_KEY: optional(z.string().min(1)),
+  NEXT_PUBLIC_TURNSTILE_SITE_KEY: optional(z.string().min(1)),
+
+  // "true" makes the form work without those services: emails are printed to the server
+  // console and there is no spam check. For local work and automated tests only.
+  CONTACT_DEV_MODE: flag,
 });
 
 export type Env = z.infer<typeof envSchema>;

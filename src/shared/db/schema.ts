@@ -7,6 +7,10 @@ import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
  * Feature tables (contact_messages, documents, products, orders, ...) are added by the module
  * that owns them, phase by phase. Re-export them from here so drizzle-kit sees one schema.
  */
+// Feature tables are re-exported so drizzle-kit sees one schema. Relative path on purpose:
+// drizzle-kit does not understand the "@/" alias.
+export * from "../../modules/contact/infrastructure/schema";
+
 export const appMeta = pgTable("app_meta", {
   key: text("key").primaryKey(),
   value: text("value").notNull(),
