@@ -3,7 +3,7 @@
 A website that looks like a normal site and behaves like an app: profile, documents library,
 products and a private admin area. Built phase by phase from `docs/PLAN.docx`.
 
-**Status: Phase 1 (public profile).** Russian and English site with Home, About, Contact (form + email), Privacy and Terms. Name, biography, photo, logo and colours are placeholders to be replaced later.
+**Status: Phase 2 (admin + documents).** Russian and English site with Home, About, Contact, Privacy, Terms, a materials library (search, filters, downloads) and a private admin area (`/admin`) for adding materials. Name, biography, photo, logo and colours are placeholders to be replaced later.
 
 ## First-time setup (about 20 minutes)
 
@@ -113,3 +113,16 @@ both enforce it.
 
 Phase 1 (public profile: Home, About, Contact, SEO). Start it only after Phase 0 is green on your
 machine and you have answered the open questions in `docs/adr/0002-hosting-region-and-payments.md`.
+
+## Phase 2 setup (admin area and materials)
+
+1. `pnpm add @vercel/blob` (file storage client; updates package.json and pnpm-lock.yaml).
+2. Create a database (Neon, free) and put its address in `DATABASE_URL`, then
+   `pnpm db:generate` and `pnpm db:migrate` (creates the `documents` tables).
+3. In Vercel: Storage tab, create a Blob store and connect it to the project (this adds
+   `BLOB_READ_WRITE_TOKEN`). Add `AUTH_SECRET` and `ADMIN_EMAIL` (see `.env.example`).
+4. Redeploy, open `/admin`, type the admin address, open the emailed link.
+5. Local work without any of this: put `CONTACT_DEV_MODE=true` in `.env.local` and run
+   `pnpm dev`; the login link is shown on screen and data lives in memory (lost on restart).
+
+Decisions: `docs/adr/0004-admin-login-and-file-storage.md`.

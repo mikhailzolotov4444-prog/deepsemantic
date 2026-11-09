@@ -42,6 +42,14 @@ const envSchema = z.object({
   // "true" makes the form work without those services: emails are printed to the server
   // console and there is no spam check. For local work and automated tests only.
   CONTACT_DEV_MODE: flag,
+
+  // Admin area and documents (Phase 2).
+  // The one person allowed into /admin; falls back to CONTACT_TO_EMAIL.
+  ADMIN_EMAIL: optional(z.email()),
+  // Signs login links, admin sessions and download links. At least 32 random characters.
+  AUTH_SECRET: optional(z.string().min(32, "must be at least 32 characters")),
+  // Created by Vercel when a Blob store is connected to the project.
+  BLOB_READ_WRITE_TOKEN: optional(z.string().min(1)),
 });
 
 export type Env = z.infer<typeof envSchema>;

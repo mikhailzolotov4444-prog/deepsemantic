@@ -10,6 +10,7 @@ import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
 // Feature tables are re-exported so drizzle-kit sees one schema. Relative path on purpose:
 // drizzle-kit does not understand the "@/" alias.
 export * from "../../modules/contact/infrastructure/schema";
+export * from "../../modules/documents/infrastructure/schema";
 
 export const appMeta = pgTable("app_meta", {
   key: text("key").primaryKey(),

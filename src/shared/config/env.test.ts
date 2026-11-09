@@ -79,6 +79,30 @@ describe("parseEnv: contact form settings", () => {
   });
 });
 
+describe("admin and documents settings", () => {
+  it("are optional", () => {
+    const env = parseEnv({});
+    expect(env.ADMIN_EMAIL).toBeUndefined();
+    expect(env.AUTH_SECRET).toBeUndefined();
+    expect(env.BLOB_READ_WRITE_TOKEN).toBeUndefined();
+  });
+
+  it("are read when present", () => {
+    const env = parseEnv({
+      ADMIN_EMAIL: "owner@example.com",
+      AUTH_SECRET: "0123456789abcdef0123456789abcdef",
+      BLOB_READ_WRITE_TOKEN: "vercel_blob_rw_x",
+    });
+    expect(env.ADMIN_EMAIL).toBe("owner@example.com");
+    expect(env.AUTH_SECRET).toHaveLength(32);
+    expect(env.BLOB_READ_WRITE_TOKEN).toBe("vercel_blob_rw_x");
+  });
+
+  it("refuses a signing secret that is too short", () => {
+    expect(() => parseEnv({ AUTH_SECRET: "short" })).toThrow(/AUTH_SECRET/);
+  });
+});
+
 describe("requireDatabaseUrl", () => {
   it("returns the URL when it is configured", () => {
     const env = parseEnv({ DATABASE_URL: "postgres://u:p@localhost:5432/db" });

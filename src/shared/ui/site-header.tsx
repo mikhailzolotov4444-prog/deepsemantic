@@ -10,6 +10,7 @@ export function SiteHeader({ locale, dict }: { locale: Locale; dict: Dictionary 
   const items = [
     { href: localizedPath(locale, "/"), label: dict.nav.home },
     { href: localizedPath(locale, "/about"), label: dict.nav.about },
+    { href: localizedPath(locale, "/library"), label: dict.nav.library },
     { href: localizedPath(locale, "/contact"), label: dict.nav.contact },
   ];
 

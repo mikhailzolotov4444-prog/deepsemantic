@@ -46,6 +46,7 @@ tests/architecture/dependency-rules.test.ts. Never weaken either to make code pa
 ## UI rules
 
 - Every user-facing text goes into src/shared/i18n/dictionaries (ru + en); see ADR-0003.
+  Exception: the admin area (src/app/admin) is Russian only (ADR-0004).
 - WCAG 2.2 AA, keyboard accessible, responsive, dark mode via design tokens.
 - Use shared components from src/shared/ui before creating new ones.
 - Colours come from the tokens in src/app/globals.css (bg-background, text-muted-foreground, ...),
@@ -68,4 +69,7 @@ tests/architecture/dependency-rules.test.ts. Never weaken either to make code pa
   `pnpm db:generate` still to be run by the owner. See README "First-time setup".
 - Phase 1 (Public profile, RU + EN): files written; owner must run `pnpm check` and `pnpm test:e2e`,
   set CONTACT\_\* / Resend / Turnstile variables for production (see .env.example).
-- Phases 2-5: not started. Do not start a phase until the owner says so.
+- Phase 2 (Admin + documents library): files written; owner must run `pnpm add @vercel/blob`,
+  `pnpm db:generate`, `pnpm db:migrate`, `pnpm check`, set ADMIN_EMAIL / AUTH_SECRET /
+  BLOB_READ_WRITE_TOKEN / DATABASE_URL in Vercel. See README "Phase 2 setup".
+- Phases 3-5: not started. Do not start a phase until the owner says so.

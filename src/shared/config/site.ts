@@ -4,4 +4,4 @@ export const siteConfig = {
 } as const;
 
 /** Every public page (without the language prefix); the sitemap is built from this list. */
-export const publicPaths = ["/", "/about", "/contact", "/privacy", "/terms"] as const;
+export const publicPaths = ["/", "/about", "/library", "/contact", "/privacy", "/terms"] as const;

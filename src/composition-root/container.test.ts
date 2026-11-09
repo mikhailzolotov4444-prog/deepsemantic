@@ -76,3 +76,52 @@ describe("contact channel", () => {
     expect(result.ok).toBe(true);
   });
 });
+
+describe("admin channel", () => {
+  const adminEnv = {
+    ...liveEnv,
+    ADMIN_EMAIL: "owner@example.com",
+    AUTH_SECRET: "0123456789abcdef0123456789abcdef",
+    DATABASE_URL: "postgres://u:p@localhost:5432/db",
+    BLOB_READ_WRITE_TOKEN: "vercel_blob_rw_x",
+  };
+
+  it("is unavailable when nothing is configured", () => {
+    const { adminChannel } = createContainer({}, parseEnv({}));
+    expect(adminChannel).toEqual({ available: false, revealLoginLink: false });
+  });
+
+  it("is available when secret, email, database and storage are configured", () => {
+    const { adminChannel } = createContainer({}, parseEnv(adminEnv));
+    expect(adminChannel).toEqual({ available: true, revealLoginLink: false });
+  });
+
+  it("stays unavailable when permanent storage is missing", () => {
+    const { adminChannel } = createContainer(
+      {},
+      parseEnv({ ...adminEnv, BLOB_READ_WRITE_TOKEN: undefined }),
+    );
+    expect(adminChannel.available).toBe(false);
+  });
+
+  it("shows the login link on screen in local development mode", () => {
+    const { adminChannel } = createContainer(
+      {},
+      parseEnv({ CONTACT_DEV_MODE: "true", NODE_ENV: "development" }),
+    );
+    expect(adminChannel).toEqual({ available: true, revealLoginLink: true });
+  });
+
+  it("ignores the development shortcut in a production build", () => {
+    const { adminChannel } = createContainer(
+      {},
+      parseEnv({ CONTACT_DEV_MODE: "true", NODE_ENV: "production" }),
+    );
+    expect(adminChannel).toEqual({ available: false, revealLoginLink: false });
+  });
+
+  it("works end to end with the in-memory stand-ins", async () => {
+    const { documents } = createContainer({}, parseEnv({}));
+    expect((await documents.listAll.execute()).length).toBeGreaterThanOrEqual(0);
+  });
+});

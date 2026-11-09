@@ -38,3 +38,11 @@ available there, and ask a lawyer about item 1.
 Phase 1 (contact form stores messages) must not go live with real visitor data until this ADR is
 accepted. Phase 3 will start with a short comparison of payment providers that work for the
 owner's country, as the plan requires.
+
+## Decision of the owner (2026-11-06)
+
+- Start with foreign services (Vercel, Neon, Vercel Blob, Resend, Cloudflare Turnstile).
+- Before the site stores REAL data of visitors (emails of people who download materials, orders),
+  move data and files to a Russian provider (Yandex Cloud). Until then use only test data.
+- Because all files and data sit behind ports (`FileStorage`, repositories), the move means
+  writing new adapters, not rewriting features.
