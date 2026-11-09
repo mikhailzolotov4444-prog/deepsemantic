@@ -27,7 +27,10 @@ test.describe("admin area", () => {
   test("a forged login link is refused", async ({ page }) => {
     await page.goto("/admin/verify?token=forged");
     await expect(page).toHaveURL(/\/admin\/login\?error=1$/);
-    await expect(page.getByRole("alert")).toContainText("Ссылка недействительна");
+    // Next.js adds its own (empty) alert for screen readers, so pick ours by its text.
+    await expect(
+      page.getByRole("alert").filter({ hasText: "Ссылка недействительна" }),
+    ).toBeVisible();
   });
 
   test("a forged session cookie does not open the admin area", async ({ page, context }) => {
