@@ -7,7 +7,7 @@ import {
 import type { AdminAuthConfig, AuthMail, AuthMailer } from "@/modules/auth/domain/auth-ports";
 import { FixedClock } from "@/shared/kernel";
 import { DisabledTokenSigner } from "@/shared/security/disabled-token-signer";
-import { HmacTokenSigner } from "@/shared/security/token-signer";
+import { HmacTokenSigner, type TokenSigner } from "@/shared/security/token-signer";
 
 class RecordingMailer implements AuthMailer {
   readonly sent: AuthMail[] = [];
@@ -101,7 +101,7 @@ describe("admin login", () => {
 
 describe("DisabledTokenSigner", () => {
   it("refuses everything", async () => {
-    const signer = new DisabledTokenSigner();
+    const signer: TokenSigner = new DisabledTokenSigner();
     await expect(signer.sign({ p: "x" }, 60)).rejects.toThrow(/AUTH_SECRET/);
     expect(await signer.verify("anything")).toBeNull();
   });
