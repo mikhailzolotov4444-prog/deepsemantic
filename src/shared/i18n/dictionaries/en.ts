@@ -48,6 +48,15 @@ export const en = {
     readyText:
       "Tell me about your level and your goals, and we will find the right way to work together.",
     readyButton: "Get in touch",
+    libraryLabel: "Library",
+    libraryHeading: "Worksheets, lesson plans, guides",
+    libraryText:
+      "Materials for levels A1 to C2. Some are free to download, some are sent by email.",
+    libraryOpen: "Open the library",
+    levelsLabel: "Choose a level",
+    searchLabel: "Topic or word",
+    searchButton: "Find",
+    aboutLabel: "About me",
   },
   about: {
     metaDescription: "Background, qualifications and teaching approach.",

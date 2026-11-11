@@ -3,13 +3,16 @@
 import type { ReactNode } from "react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 
-/** Follows the visitor's OS setting by default; the toggle stores an explicit choice. */
+/**
+ * The site is designed dark (see noir.css), so it opens dark for everyone; the toggle stores an
+ * explicit choice. The light theme is a plain fallback until it gets its own design.
+ */
 export function ThemeProvider({ children }: { children: ReactNode }) {
   return (
     <NextThemesProvider
       attribute="class"
-      defaultTheme="system"
-      enableSystem
+      defaultTheme="dark"
+      enableSystem={false}
       disableTransitionOnChange
     >
       {children}

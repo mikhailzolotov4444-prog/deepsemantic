@@ -3,6 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { switchLocaleInPath, type Locale } from "@/shared/i18n/config";
+import { cn } from "@/shared/lib/utils";
+import { menuLinkClass } from "./nav-links";
+import { RotatingLabel } from "./rotating-label";
 
 const names: Record<Locale, string> = { ru: "Русский", en: "English" };
 
@@ -22,9 +25,9 @@ export function LanguageSwitcher({ current, label }: LanguageSwitcherProps) {
       hrefLang={target}
       lang={target}
       title={label}
-      className="inline-flex min-h-9 items-center rounded-md px-2 text-sm text-muted-foreground hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+      className={cn(menuLinkClass, "text-muted-foreground hover:text-foreground")}
     >
-      {names[target]}
+      <RotatingLabel>{names[target]}</RotatingLabel>
     </Link>
   );
 }

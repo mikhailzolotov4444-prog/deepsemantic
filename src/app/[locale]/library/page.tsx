@@ -10,6 +10,7 @@ import { resolveLocale, type LocaleParams } from "@/shared/i18n/params";
 import { totalPages } from "@/shared/kernel";
 import { Button, buttonVariants } from "@/shared/ui/button";
 import { Container } from "@/shared/ui/container";
+import { RotatingLabel } from "@/shared/ui/rotating-label";
 
 export async function generateMetadata({ params }: LocaleParams): Promise<Metadata> {
   const locale = await resolveLocale(params);
@@ -22,10 +23,11 @@ export async function generateMetadata({ params }: LocaleParams): Promise<Metada
 }
 
 const controlClass =
-  "w-full rounded-md border border-muted-foreground/60 bg-background px-3 py-2 text-sm " +
+  "field w-full rounded-md border border-muted-foreground/60 bg-background px-3 py-2 text-sm " +
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 
-const badgeClass = "rounded-full border border-border px-2 py-0.5 text-xs text-muted-foreground";
+const badgeClass =
+  "badge-glass rounded-full border border-border px-2.5 py-0.5 text-xs text-muted-foreground";
 
 function pageHref(base: string, query: LibraryQuery, page: number): string {
   const params = new URLSearchParams();
@@ -61,7 +63,9 @@ export default async function LibraryPage({
 
   return (
     <Container className="py-12 sm:py-16">
-      <h1 className="text-4xl font-semibold tracking-tight">{dict.h1}</h1>
+      <h1 className="metal font-display text-4xl font-bold uppercase tracking-[0.05em] text-balance sm:text-5xl">
+        {dict.h1}
+      </h1>
       <p className="mt-3 text-muted-foreground">{dict.intro}</p>
 
       <form
@@ -69,7 +73,7 @@ export default async function LibraryPage({
         action={base}
         role="search"
         aria-label={dict.filters.label}
-        className="mt-8 grid gap-4 rounded-lg border border-border bg-card p-4 sm:grid-cols-2 lg:grid-cols-4"
+        className="slate-card mt-8 grid gap-4 rounded-lg border border-border bg-card p-4 sm:grid-cols-2 sm:p-6 lg:grid-cols-4"
       >
         <div className="sm:col-span-2 lg:col-span-4">
           <label htmlFor="library-q" className="mb-1 block text-sm font-medium">
@@ -139,7 +143,9 @@ export default async function LibraryPage({
           </select>
         </div>
         <div className="flex gap-3 sm:col-span-2 lg:col-span-4">
-          <Button type="submit">{dict.filters.apply}</Button>
+          <Button type="submit">
+            <RotatingLabel>{dict.filters.apply}</RotatingLabel>
+          </Button>
           {filtered ? (
             <Link href={base} className={buttonVariants({ variant: "ghost" })}>
               {dict.filters.reset}
@@ -160,7 +166,7 @@ export default async function LibraryPage({
           <ul className="mt-4 grid gap-4 sm:grid-cols-2">
             {documents.items.map((document) => (
               <li key={document.id}>
-                <article className="flex h-full flex-col rounded-lg border border-border bg-card p-5">
+                <article className="slate-card slate-card--link flex h-full flex-col rounded-lg border border-border bg-card p-6">
                   <h2 className="text-xl font-semibold tracking-tight">
                     <Link
                       href={localizedPath(locale, `/library/${document.slug}`)}

@@ -5,6 +5,8 @@ import { siteConfig } from "@/shared/config/site";
 import { isLocale, locales } from "@/shared/i18n/config";
 import { getDictionary } from "@/shared/i18n/dictionaries";
 import { resolveLocale, type LocaleParams } from "@/shared/i18n/params";
+import { BackdropFx } from "@/shared/ui/backdrop-fx";
+import { fontVariables } from "@/shared/ui/fonts";
 import { SiteFooter } from "@/shared/ui/site-footer";
 import { SiteHeader } from "@/shared/ui/site-header";
 import { ThemeProvider } from "@/shared/ui/theme-provider";
@@ -43,8 +45,8 @@ export async function generateMetadata({ params }: LocaleParams): Promise<Metada
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fcfcfb" },
-    { media: "(prefers-color-scheme: dark)", color: "#14161c" },
+    // The site opens dark for everyone, so the browser bar matches the dark wall.
+    { color: "#0b0b0e" },
   ],
 };
 
@@ -57,7 +59,7 @@ export default async function LocaleLayout({
 
   return (
     // suppressHydrationWarning: next-themes sets the theme class on <html> before React hydrates.
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={locale} className={fontVariables} suppressHydrationWarning>
       <body className="min-h-dvh">
         <a
           href="#main"
@@ -66,6 +68,7 @@ export default async function LocaleLayout({
           {dict.a11y.skipLink}
         </a>
         <ThemeProvider>
+          <BackdropFx />
           <div className="flex min-h-dvh flex-col">
             <SiteHeader locale={locale} dict={dict} />
             <main id="main" className="flex-1">

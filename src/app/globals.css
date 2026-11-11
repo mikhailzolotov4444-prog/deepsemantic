@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* Decoration of the dark ("Noir Deco") theme: see the comment at the top of that file. */
+@import "./noir.css";
 
 /* Dark mode is switched by a `.dark` class on <html> (next-themes), not by the OS alone. */
 @custom-variant dark (&:where(.dark, .dark *));
@@ -25,20 +27,24 @@
   --radius: 0.625rem;
 }
 
+/*
+ * Dark theme = the designed look of the site ("Noir Deco": black walls, brass, slate).
+ * Every text colour here was checked for WCAG AA contrast on --background and --card.
+ */
 .dark {
-  --background: oklch(0.16 0.01 260);
-  --foreground: oklch(0.96 0.005 260);
-  --card: oklch(0.2 0.012 260);
-  --card-foreground: oklch(0.96 0.005 260);
-  --muted: oklch(0.24 0.012 260);
-  --muted-foreground: oklch(0.72 0.02 260);
-  --border: oklch(0.32 0.015 260);
-  --primary: oklch(0.72 0.14 265);
-  --primary-foreground: oklch(0.16 0.01 260);
-  --accent: oklch(0.28 0.05 265);
-  --accent-foreground: oklch(0.92 0.03 265);
+  --background: #0b0b0e;
+  --foreground: #dedbd4;
+  --card: #15171b;
+  --card-foreground: #dedbd4;
+  --muted: #1b1c21;
+  --muted-foreground: #9a9a9e;
+  --border: #2b2d34;
+  --primary: #d4af37;
+  --primary-foreground: #0a0a0c;
+  --accent: #1a1b21;
+  --accent-foreground: #e8d48b;
   --destructive: oklch(0.7 0.18 25);
-  --ring: oklch(0.72 0.14 265);
+  --ring: #e8d48b;
 }
 
 @theme inline {
@@ -61,11 +67,17 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  /* System font stack: no third-party font requests, fast first paint, no privacy cost. */
+  /*
+   * Fonts come from next/font (see shared/ui/fonts.ts): self-hosted, with Cyrillic.
+   * The system stack stays as a fallback while they load.
+   */
   --font-sans:
-    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
-    "Noto Sans", sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    var(--ff-body), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, "Noto Sans", sans-serif;
+  --font-display: var(--ff-display), Georgia, "Times New Roman", serif;
+  --font-accent: var(--ff-accent), var(--ff-body), ui-sans-serif, system-ui, sans-serif;
+  --font-mono:
+    var(--ff-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 }
 
 @layer base {

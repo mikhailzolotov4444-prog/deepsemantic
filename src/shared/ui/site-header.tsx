@@ -8,22 +8,21 @@ import { ThemeToggle } from "./theme-toggle";
 
 export function SiteHeader({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const items = [
-    { href: localizedPath(locale, "/"), label: dict.nav.home },
     { href: localizedPath(locale, "/about"), label: dict.nav.about },
     { href: localizedPath(locale, "/library"), label: dict.nav.library },
     { href: localizedPath(locale, "/contact"), label: dict.nav.contact },
   ];
 
   return (
-    <header className="border-b border-border">
-      <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-4 py-3">
+    <header className="site-header sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur">
+      <div className="mx-auto flex min-h-[72px] w-full max-w-[1440px] flex-wrap items-center justify-between gap-x-8 gap-y-2 px-4 py-2 md:px-8 lg:min-h-[92px] lg:flex-nowrap lg:px-12">
         <Link
           href={localizedPath(locale, "/")}
-          className="rounded-md text-lg font-semibold tracking-tight focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          className="metal-thin whitespace-nowrap rounded-md font-display text-xl font-bold uppercase tracking-[0.12em] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring lg:text-[26px] xl:text-[32px]"
         >
           {siteConfig.name}
         </Link>
-        <div className="flex flex-wrap items-center gap-1">
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 lg:flex-nowrap lg:gap-x-8">
           <NavLinks items={items} label={dict.nav.main} homeHref={localizedPath(locale, "/")} />
           <LanguageSwitcher current={locale} label={dict.nav.language} />
           <ThemeToggle label={dict.nav.themeToggle} />

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { siteConfig } from "@/shared/config/site";
+import { BackdropFx } from "@/shared/ui/backdrop-fx";
+import { fontVariables } from "@/shared/ui/fonts";
 import { ThemeProvider } from "@/shared/ui/theme-provider";
 import "../globals.css";
 
@@ -13,9 +15,12 @@ export const metadata: Metadata = {
 // The admin area is outside the language folders, so it has its own <html>.
 export default function AdminLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="ru" suppressHydrationWarning>
+    <html lang="ru" className={fontVariables} suppressHydrationWarning>
       <body className="min-h-dvh">
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <BackdropFx />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

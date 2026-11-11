@@ -1,0 +1,738 @@
+/*
+ * "Noir Deco" look of the dark theme: black walls with soft pools of light, polished brass,
+ * slate plaques, glass chips and a thin amber light strip under the header.
+ *
+ * Structure that every theme needs (the rotating label) is outside `.dark`. All decoration is
+ * scoped to `.dark`, so the light theme stays a plain, working fallback.
+ * Components attach to these classes; colours that belong to the brand live in globals.css.
+ */
+
+/* --- Rotating label: text engraved on a four-sided rod, turns once on hover/focus ------------ */
+
+.rod {
+  position: relative;
+  display: inline-block;
+  height: 1.5em;
+  line-height: 1.5em;
+  perspective: 700px;
+  vertical-align: middle;
+}
+
+.prism {
+  position: relative;
+  display: block;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: translateZ(-0.75em);
+  transition: transform 0.9s cubic-bezier(0.65, 0, 0.3, 1);
+}
+
+.face {
+  display: block;
+  height: 1.5em;
+  white-space: nowrap;
+  backface-visibility: hidden;
+}
+
+.face:nth-child(1) {
+  position: relative;
+  transform: translateZ(0.75em);
+}
+
+.face:nth-child(n + 2) {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+
+.face:nth-child(2) {
+  transform: rotateX(-90deg) translateZ(0.75em);
+}
+
+.face:nth-child(3) {
+  transform: rotateX(-180deg) translateZ(0.75em);
+}
+
+.face:nth-child(4) {
+  transform: rotateX(-270deg) translateZ(0.75em);
+}
+
+:is(a, button):is(:hover, :focus-visible) .prism {
+  transform: translateZ(-0.75em) rotateX(360deg);
+}
+
+/* --- Page background ------------------------------------------------------------------------ */
+
+.backdrop-fx {
+  display: none;
+}
+
+.dark .backdrop-fx {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(620px 440px at 10% 14%, rgb(255 176 90 / 0.11), transparent 70%),
+    radial-gradient(720px 520px at 90% 40%, rgb(120 172 228 / 0.09), transparent 70%),
+    radial-gradient(640px 460px at 16% 76%, rgb(255 170 80 / 0.09), transparent 70%),
+    radial-gradient(560px 430px at 84% 93%, rgb(255 190 110 / 0.08), transparent 70%);
+}
+
+.backdrop-fx__stone {
+  position: absolute;
+  inset: 0;
+  opacity: 0.11;
+}
+
+.dark body {
+  letter-spacing: 0.025em;
+  line-height: 1.75;
+}
+
+/* --- Metal letters -------------------------------------------------------------------------- */
+
+/* Big headings: gold metal with a little depth. `color` is the fallback and what tools measure. */
+.dark .metal {
+  color: #e2c46c;
+  background: linear-gradient(
+    180deg,
+    #f4e3b0 0%,
+    #e4c872 38%,
+    #cba340 52%,
+    #dcbc62 64%,
+    #ecd592 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 1px 0 #6a4f12) drop-shadow(0 2px 0 #55410f)
+    drop-shadow(0 6px 8px rgb(0 0 0 / 0.7));
+}
+
+/* Small gold labels (logo, section captions): thin metal stuck on a panel. */
+.dark .metal-thin {
+  color: #d4af37;
+  background: linear-gradient(
+    180deg,
+    #f7ebcc 0%,
+    #e2c46c 32%,
+    #b8952a 50%,
+    #cfae45 60%,
+    #e8d48b 84%,
+    #f3e3b4 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 -1px 0 rgb(255 244 210 / 0.25)) drop-shadow(0 1px 0 rgb(30 20 3 / 0.95))
+    drop-shadow(0 2px 2px rgb(0 0 0 / 0.45));
+}
+
+/* Menu links: silver metal, gold when hovered, focused or current. */
+.dark .metal-link .face {
+  color: #b4b4b8;
+  background: linear-gradient(
+    180deg,
+    #dcdce0 0%,
+    #bdbdc1 34%,
+    #8e8e94 50%,
+    #a6a6ab 58%,
+    #cbcbcf 82%,
+    #e2e2e6 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 -1px 0 rgb(255 255 255 / 0.22)) drop-shadow(0 1px 0 rgb(0 0 0 / 0.95))
+    drop-shadow(0 2px 2px rgb(0 0 0 / 0.45));
+}
+
+.dark .metal-link:is(:hover, :focus-visible, [aria-current="page"]) .face {
+  color: #d4af37;
+  background: linear-gradient(
+    180deg,
+    #f7ebcc 0%,
+    #e2c46c 34%,
+    #b8952a 50%,
+    #cfae45 58%,
+    #e8d48b 82%,
+    #f7ebcc 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 -1px 0 rgb(255 244 210 / 0.25)) drop-shadow(0 1px 0 rgb(30 20 3 / 0.95))
+    drop-shadow(0 2px 2px rgb(0 0 0 / 0.45));
+}
+
+/* --- Header: amber light strip --------------------------------------------------------------- */
+
+.dark .site-header {
+  background: rgb(10 10 12 / 0.88);
+  backdrop-filter: blur(20px) saturate(1.2);
+  border-bottom: 1px solid rgb(212 175 55 / 0.12);
+}
+
+.dark .site-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #c9701c 8%,
+    #ffb347 30%,
+    #ffe2a6 50%,
+    #ffb347 70%,
+    #c9701c 92%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 6px 1px rgb(255 190 90 / 0.75),
+    0 0 18px 3px rgb(255 150 50 / 0.45),
+    0 14px 40px -4px rgb(255 140 40 / 0.22);
+  pointer-events: none;
+}
+
+/* --- Buttons ---------------------------------------------------------------------------------- */
+
+.dark .btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 48px;
+  padding: 0 40px;
+  border-radius: 8px;
+  font-family: var(--ff-mono), ui-monospace, Menlo, Consolas, monospace;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition:
+    color 0.4s,
+    box-shadow 0.4s;
+}
+
+.dark .btn-sm {
+  min-height: 40px;
+  padding: 0 24px;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+}
+
+.dark .btn-icon {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0;
+  letter-spacing: 0;
+}
+
+/* The fill that wipes in from the left on hover. */
+.dark .btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: translateX(-101%);
+  transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.dark .btn:is(:hover, :focus-visible)::before {
+  transform: translateX(0);
+}
+
+/* Gloss layer above the wipe. */
+.dark .btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Primary: polished brass with a little volume. */
+.dark .btn-brass {
+  background: linear-gradient(135deg, #d4af37 0%, #b8952a 100%);
+  color: #0a0a0c;
+  border: 1px solid #d4af37;
+  box-shadow:
+    inset 0 1px 0 rgb(255 246 214 / 0.7),
+    inset 0 -2px 3px rgb(110 80 10 / 0.4),
+    0 2px 0 #6f5410,
+    0 8px 16px -6px rgb(0 0 0 / 0.75);
+}
+
+.dark .btn-brass::before {
+  background: linear-gradient(135deg, #e8d48b 0%, #d4af37 100%);
+}
+
+.dark .btn-brass::after {
+  background: linear-gradient(
+    180deg,
+    rgb(255 250 225 / 0.28) 0%,
+    rgb(255 250 225 / 0) 50%,
+    rgb(90 60 5 / 0.2) 100%
+  );
+}
+
+.dark .btn-brass:hover {
+  box-shadow:
+    inset 0 1px 0 rgb(255 246 214 / 0.8),
+    inset 0 -2px 3px rgb(110 80 10 / 0.35),
+    0 2px 0 #6f5410,
+    0 8px 24px -4px rgb(212 175 55 / 0.4),
+    0 0 40px rgb(212 175 55 / 0.12);
+}
+
+/* Secondary: glossy black with a gold edge and a soft glow. */
+.dark .btn-ink {
+  background: linear-gradient(180deg, #26262b 0%, #141417 49%, #060607 51%, #0e0e11 100%);
+  color: #d4af37;
+  border: 1px solid #d4af37;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.16),
+    inset 0 -1px 0 rgb(0 0 0 / 0.8),
+    0 0 14px rgb(212 175 55 / 0.3),
+    0 0 36px rgb(255 160 60 / 0.12);
+  text-shadow: 0 0 6px rgb(255 190 70 / 0.35);
+}
+
+.dark .btn-ink::before {
+  background: linear-gradient(135deg, #d4af37 0%, #b8952a 100%);
+}
+
+.dark .btn-ink::after {
+  background: linear-gradient(
+    180deg,
+    rgb(255 255 255 / 0.1) 0%,
+    rgb(255 255 255 / 0.03) 50%,
+    transparent 50.5%
+  );
+}
+
+.dark .btn-ink:is(:hover, :focus-visible) {
+  color: #0a0a0c;
+  text-shadow: none;
+  box-shadow:
+    inset 0 1px 0 rgb(255 246 214 / 0.5),
+    inset 0 -1px 0 rgb(0 0 0 / 0.45),
+    0 4px 22px rgb(212 175 55 / 0.4),
+    0 0 46px rgb(255 170 70 / 0.2);
+}
+
+/* Quiet text button: no fill, no wipe. */
+.dark .btn-quiet {
+  background: transparent;
+  color: #b4b4b8;
+  border: 1px solid transparent;
+}
+
+.dark .btn-quiet::before,
+.dark .btn-quiet::after {
+  display: none;
+}
+
+.dark .btn-quiet:is(:hover, :focus-visible) {
+  color: #e8d48b;
+  background: rgb(255 255 255 / 0.04);
+}
+
+/* --- Slate plaques with the running amber "snake" ------------------------------------------- */
+
+@property --snake {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.dark .slate-card {
+  position: relative;
+  isolation: isolate;
+  border-radius: 22px;
+  border: 1px solid rgb(150 162 178 / 0.15);
+  background: linear-gradient(155deg, rgb(24 26 31 / 0.93) 0%, rgb(19 21 25 / 0.93) 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.035),
+    inset 0 -26px 44px -24px rgb(0 0 0 / 0.5),
+    0 24px 50px -24px rgb(0 0 0 / 0.85),
+    0 0 18px rgb(160 198 232 / 0.1);
+  transition:
+    border-color 0.4s,
+    box-shadow 0.4s,
+    transform 0.4s;
+}
+
+/* Very fine tooth of slate, below the content. */
+.dark .slate-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  clip-path: inset(0 round 22px);
+  background: #fff;
+  filter: url(#cardstone);
+  pointer-events: none;
+}
+
+/* The snake: a short bright amber light running once around the edge every 15 s. */
+.dark .slate-card::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 2.5px;
+  background: conic-gradient(
+    from var(--snake),
+    transparent 0deg,
+    transparent 252deg,
+    rgb(255 140 30 / 0.35) 285deg,
+    #ffa726 330deg,
+    #ffd45e 352deg,
+    #fffdf0 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  filter: drop-shadow(0 0 3px #ffe9a8) drop-shadow(0 0 9px #ffb02e)
+    drop-shadow(0 0 22px rgb(255 120 20 / 0.85));
+  animation: snake 15s linear infinite;
+}
+
+@keyframes snake {
+  0% {
+    --snake: 0deg;
+    opacity: 0;
+  }
+  1% {
+    opacity: 1;
+  }
+  9% {
+    opacity: 1;
+  }
+  10% {
+    --snake: 360deg;
+    opacity: 0;
+  }
+  100% {
+    --snake: 360deg;
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dark .slate-card::after {
+    display: none;
+  }
+}
+
+.dark .slate-card--link:hover {
+  transform: translateY(-3px);
+  border-color: rgb(176 190 208 / 0.34);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.05),
+    inset 0 -26px 44px -24px rgb(0 0 0 / 0.5),
+    0 28px 56px -22px rgb(0 0 0 / 0.9),
+    0 0 26px rgb(160 198 232 / 0.2);
+}
+
+.dark .slate-card :is(h2, h3) {
+  font-family: var(--ff-display), Georgia, serif;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #d4af37;
+  line-height: 1.3;
+  text-shadow:
+    0 0 5px rgb(255 190 70 / 0.5),
+    0 0 14px rgb(255 150 40 / 0.22);
+}
+
+.dark .slate-card p {
+  text-shadow: 0 0 8px rgb(160 200 240 / 0.16);
+}
+
+/* --- Glass badge (level, type): thin glass that shows the wall through it ------------------- */
+
+.dark .badge-glass {
+  border: 1px solid rgb(200 222 242 / 0.3);
+  background: linear-gradient(
+    180deg,
+    rgb(255 255 255 / 0.17) 0%,
+    rgb(255 255 255 / 0.05) 46%,
+    rgb(255 255 255 / 0.02) 54%,
+    rgb(170 205 235 / 0.1) 100%
+  );
+  backdrop-filter: blur(5px) saturate(1.25);
+  box-shadow:
+    inset 0 1.5px 0 rgb(255 255 255 / 0.4),
+    inset 0 -2px 4px rgb(0 0 0 / 0.35),
+    0 2px 0 rgb(150 186 216 / 0.2),
+    0 6px 10px -6px rgb(0 0 0 / 0.75);
+  color: #b4b4b8;
+  font-family: var(--ff-mono), ui-monospace, Menlo, Consolas, monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* --- Search field with a golden glow -------------------------------------------------------- */
+
+.dark .field {
+  border: 1px solid rgb(212 175 55 / 0.55);
+  background: rgb(10 10 12 / 0.85);
+  color: #f5e6c8;
+  font-family: var(--ff-mono), ui-monospace, Menlo, Consolas, monospace;
+  box-shadow:
+    0 0 0 1px rgb(212 175 55 / 0.12),
+    0 0 24px rgb(212 175 55 / 0.2),
+    inset 0 0 16px rgb(212 175 55 / 0.08);
+  transition:
+    box-shadow 0.35s,
+    border-color 0.35s;
+}
+
+.dark .field:hover {
+  border-color: rgb(232 212 139 / 0.8);
+}
+
+.dark .field::placeholder {
+  color: #8a8a92;
+}
+
+.dark .field:focus-visible {
+  outline: 2px solid #e8d48b;
+  outline-offset: 3px;
+  border-color: #e8d48b;
+  box-shadow:
+    0 0 0 1px rgb(232 212 139 / 0.4),
+    0 0 38px rgb(212 175 55 / 0.42),
+    inset 0 0 18px rgb(212 175 55 / 0.14);
+}
+
+/* --- Brass name plaque, lit niche for the photo ---------------------------------------------- */
+
+.dark .plaque {
+  position: relative;
+  border-radius: 16px;
+  background:
+    repeating-linear-gradient(90deg, rgb(255 243 200 / 0.014) 0 1px, transparent 1px 2px),
+    repeating-linear-gradient(90deg, rgb(70 48 8 / 0.014) 0 1px, transparent 1px 3px),
+    linear-gradient(
+      180deg,
+      #eed487 0%,
+      #e0bd66 32%,
+      #cfa84d 50%,
+      #c4a040 52%,
+      #d9b660 78%,
+      #e9cd7d 100%
+    );
+  box-shadow:
+    inset 0 1px 0 rgb(255 246 214 / 0.65),
+    inset 0 -1px 0 rgb(70 48 8 / 0.55),
+    inset 0 0 0 1px rgb(255 236 170 / 0.12),
+    0 22px 44px -18px rgb(0 0 0 / 0.9),
+    0 2px 0 rgb(0 0 0 / 0.6),
+    0 0 0 1px rgb(255 200 130 / 0.55),
+    0 0 10px 1px rgb(255 172 84 / 0.45),
+    0 0 30px 4px rgb(255 150 60 / 0.2);
+}
+
+/* Dark red-gold letters printed ON the brass. */
+.dark .redgold {
+  color: #5a2a0a;
+  background: linear-gradient(180deg, #7b3d12 0%, #58290a 55%, #74390f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 1px 0 rgb(255 222 186 / 0.55));
+}
+
+.photo-frame {
+  position: relative;
+}
+
+/* The niche is cut into the frame; its content (photo or initials) sits inside it. */
+.niche {
+  position: absolute;
+  inset: 22px;
+  display: flex;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.dark .photo-frame {
+  border-radius: 20px;
+  background: linear-gradient(160deg, #202026 0%, #101013 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 240 200 / 0.18),
+    inset 0 0 0 1px rgb(255 255 255 / 0.05),
+    0 30px 60px -24px rgb(0 0 0 / 0.9);
+}
+
+/* Lit from inside: a warm glow all around the inner edge. */
+.dark .niche {
+  background: radial-gradient(75% 65% at 50% 50%, #2b2217 0%, #0e0b08 80%);
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 0.9),
+    0 0 28px 3px rgb(255 185 100 / 0.3),
+    inset 0 0 0 2px #ffd9a0,
+    inset 0 0 20px 5px rgb(255 185 100 / 0.85),
+    inset 0 0 64px 10px rgb(255 160 70 / 0.4);
+}
+
+.niche img {
+  position: relative;
+  z-index: 0;
+}
+
+/* --- Hero ------------------------------------------------------------------------------------ */
+
+.sunburst {
+  display: none;
+}
+
+.dark .noir-hero::before {
+  content: "";
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(800px, 100%);
+  height: 600px;
+  background: radial-gradient(
+    rgb(212 175 55 / 0.08) 0%,
+    rgb(212 175 55 / 0.03) 30%,
+    transparent 65%
+  );
+  pointer-events: none;
+}
+
+.dark .sunburst {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  transform: translate(-50%, -50%);
+  background: repeating-conic-gradient(
+    rgb(212 175 55 / 0.05) 0deg,
+    rgb(212 175 55 / 0.05) 5deg,
+    transparent 5deg,
+    transparent 10deg
+  );
+  -webkit-mask-image: radial-gradient(
+    circle at center,
+    #000 0%,
+    rgb(0 0 0 / 0.55) 9%,
+    transparent 22%
+  );
+  mask-image: radial-gradient(circle at center, #000 0%, rgb(0 0 0 / 0.55) 9%, transparent 22%);
+  pointer-events: none;
+}
+
+/* --- Divider: slowly pulsing bar of bluish metal light --------------------------------------- */
+
+.lightbar {
+  display: none;
+}
+
+.dark .lightbar {
+  display: block;
+  position: relative;
+  width: min(520px, 70%);
+  height: 3px;
+  margin: 0 auto;
+  border-radius: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #5f8fb0 14%,
+    #bcdcf0 50%,
+    #5f8fb0 86%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 14px 1px rgb(110 178 228 / 0.4),
+    0 0 34px 4px rgb(110 178 228 / 0.16);
+  animation: lbpulse 5.5s ease-in-out infinite;
+}
+
+@keyframes lbpulse {
+  0%,
+  100% {
+    opacity: 0.5;
+    box-shadow:
+      0 0 10px 0 rgb(110 178 228 / 0.28),
+      0 0 24px 2px rgb(110 178 228 / 0.1);
+  }
+  50% {
+    opacity: 0.95;
+    box-shadow:
+      0 0 18px 2px rgb(110 178 228 / 0.52),
+      0 0 44px 6px rgb(110 178 228 / 0.22);
+  }
+}
+
+/* --- Footer ----------------------------------------------------------------------------------- */
+
+.dark .site-footer {
+  border-top: 1px solid rgb(212 175 55 / 0.12);
+}
+
+/* --- Level chips: thick glass buttons that let the wall's colour through --------------------- */
+
+.dark .chip {
+  border: 1px solid rgb(200 222 242 / 0.3);
+  border-radius: 14px;
+  background: linear-gradient(
+    180deg,
+    rgb(255 255 255 / 0.17) 0%,
+    rgb(255 255 255 / 0.05) 46%,
+    rgb(255 255 255 / 0.02) 54%,
+    rgb(170 205 235 / 0.1) 100%
+  );
+  backdrop-filter: blur(5px) saturate(1.25);
+  box-shadow:
+    inset 0 1.5px 0 rgb(255 255 255 / 0.4),
+    inset 0 -3px 6px rgb(0 0 0 / 0.35),
+    inset 0 0 0 1px rgb(255 255 255 / 0.05),
+    0 3px 0 rgb(150 186 216 / 0.2),
+    0 9px 14px -7px rgb(0 0 0 / 0.75);
+  color: #b4b4b8;
+  transition:
+    border-color 0.3s,
+    color 0.3s,
+    background 0.3s,
+    box-shadow 0.3s;
+}
+
+.dark .chip:is(:hover, :focus-visible) {
+  border-color: rgb(232 200 110 / 0.7);
+  color: #e8d48b;
+  background: linear-gradient(
+    180deg,
+    rgb(255 226 150 / 0.24) 0%,
+    rgb(212 175 55 / 0.08) 46%,
+    rgb(212 175 55 / 0.04) 54%,
+    rgb(212 175 55 / 0.14) 100%
+  );
+  box-shadow:
+    inset 0 1.5px 0 rgb(255 240 200 / 0.5),
+    inset 0 -3px 6px rgb(0 0 0 / 0.35),
+    0 3px 0 rgb(190 160 70 / 0.28),
+    0 9px 18px -7px rgb(0 0 0 / 0.75),
+    0 0 18px rgb(212 175 55 / 0.2);
+}

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/shared/lib/utils";
+import { RotatingLabel } from "./rotating-label";
 
 interface NavLinksProps {
   readonly items: readonly { readonly href: string; readonly label: string }[];
@@ -11,12 +12,19 @@ interface NavLinksProps {
   readonly homeHref: string;
 }
 
+/** Classes shared by every menu link (header, language switch, footer). */
+export const menuLinkClass = cn(
+  "metal-link inline-flex min-h-9 items-center rounded-md px-1 font-mono uppercase",
+  "text-[13px] tracking-[0.1em] lg:text-[15px] lg:tracking-[0.15em] xl:text-lg xl:tracking-[0.17em]",
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+);
+
 export function NavLinks({ items, label, homeHref }: NavLinksProps) {
   const pathname = usePathname();
 
   return (
     <nav aria-label={label}>
-      <ul className="flex items-center gap-1">
+      <ul className="flex flex-wrap items-center gap-x-1 gap-y-1 lg:flex-nowrap lg:gap-x-6 xl:gap-x-10">
         {items.map((item) => {
           const isCurrent =
             item.href === homeHref ? pathname === homeHref : pathname.startsWith(item.href);
@@ -26,12 +34,12 @@ export function NavLinks({ items, label, homeHref }: NavLinksProps) {
                 href={item.href}
                 aria-current={isCurrent ? "page" : undefined}
                 className={cn(
-                  "inline-flex min-h-9 items-center rounded-md px-2 text-sm hover:bg-muted",
-                  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+                  menuLinkClass,
+                  "hover:text-foreground",
                   isCurrent ? "font-semibold text-foreground" : "text-muted-foreground",
                 )}
               >
-                {item.label}
+                <RotatingLabel>{item.label}</RotatingLabel>
               </Link>
             </li>
           );
