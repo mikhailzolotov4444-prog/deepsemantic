@@ -3,6 +3,7 @@ import { siteConfig } from "@/shared/config/site";
 import { localizedPath, type Locale } from "@/shared/i18n/config";
 import type { Dictionary } from "@/shared/i18n/dictionaries";
 import { cn } from "@/shared/lib/utils";
+import { InstallAppButton } from "./install-app-button";
 import { RotatingLabel } from "./rotating-label";
 import { SectionDivider } from "./section-divider";
 
@@ -36,6 +37,7 @@ export function SiteFooter({ locale, dict }: { locale: Locale; dict: Dictionary 
             ))}
           </ul>
         </nav>
+        <InstallAppButton label={dict.nav.install} />
         <p className="font-mono text-[11px] tracking-[0.1em]">
           © {new Date().getFullYear()} {siteConfig.name}
         </p>

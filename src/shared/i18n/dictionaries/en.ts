@@ -23,6 +23,7 @@ export const en = {
     terms: "Terms",
     themeToggle: "Toggle dark mode",
     language: "Language",
+    install: "Install the app",
   },
   home: {
     h1: "English, taught with care.",

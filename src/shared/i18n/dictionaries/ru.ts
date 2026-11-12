@@ -22,6 +22,7 @@ export const ru: Dictionary = {
     terms: "Условия",
     themeToggle: "Переключить тёмную тему",
     language: "Язык",
+    install: "Установить приложение",
   },
   home: {
     h1: "Английский с заботой об ученике.",

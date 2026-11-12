@@ -76,6 +76,20 @@ const eslintConfig = defineConfig([
       ],
     },
   },
+  {
+    // The service worker runs in the browser's worker scope, not in Node or a page.
+    files: ["public/sw.js"],
+    languageOptions: {
+      sourceType: "script",
+      globals: {
+        self: "readonly",
+        caches: "readonly",
+        fetch: "readonly",
+        Response: "readonly",
+        URL: "readonly",
+      },
+    },
+  },
   globalIgnores([
     ".next/**",
     "out/**",

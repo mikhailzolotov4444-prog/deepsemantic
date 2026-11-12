@@ -7,6 +7,7 @@ import { getDictionary } from "@/shared/i18n/dictionaries";
 import { resolveLocale, type LocaleParams } from "@/shared/i18n/params";
 import { BackdropFx } from "@/shared/ui/backdrop-fx";
 import { fontVariables } from "@/shared/ui/fonts";
+import { ServiceWorkerRegistration } from "@/shared/ui/service-worker-registration";
 import { SiteFooter } from "@/shared/ui/site-footer";
 import { SiteHeader } from "@/shared/ui/site-header";
 import { ThemeProvider } from "@/shared/ui/theme-provider";
@@ -36,6 +37,9 @@ export async function generateMetadata({ params }: LocaleParams): Promise<Metada
       locale: locale === "ru" ? "ru_RU" : "en_GB",
     },
     twitter: { card: "summary_large_image" },
+    // Home-screen icon and full-screen launch on iPhone (Android reads the manifest).
+    appleWebApp: { capable: true, title: siteConfig.name, statusBarStyle: "black-translucent" },
+    icons: { apple: "/icons/apple-touch-icon.png" },
     // Stay out of search results until the real content is ready (NEXT_PUBLIC_ALLOW_INDEXING=true).
     robots: env.NEXT_PUBLIC_ALLOW_INDEXING
       ? { index: true, follow: true }
@@ -69,6 +73,7 @@ export default async function LocaleLayout({
         </a>
         <ThemeProvider>
           <BackdropFx />
+          <ServiceWorkerRegistration />
           <div className="flex min-h-dvh flex-col">
             <SiteHeader locale={locale} dict={dict} />
             <main id="main" className="flex-1">
