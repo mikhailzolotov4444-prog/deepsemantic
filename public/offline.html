@@ -13,8 +13,12 @@
     <title>Нет соединения | Deep Semantic</title>
     <link rel="icon" href="/icons/icon-192.png" />
     <style>
-      :root { color-scheme: dark; }
-      * { box-sizing: border-box; }
+      :root {
+        color-scheme: dark;
+      }
+      * {
+        box-sizing: border-box;
+      }
       body {
         margin: 0;
         min-height: 100dvh;
@@ -23,14 +27,19 @@
         padding: 24px;
         background:
           radial-gradient(620px 440px at 15% 20%, rgb(255 176 90 / 0.11), transparent 70%),
-          radial-gradient(720px 520px at 85% 70%, rgb(120 172 228 / 0.09), transparent 70%),
-          #0b0b0e;
+          radial-gradient(720px 520px at 85% 70%, rgb(120 172 228 / 0.09), transparent 70%), #0b0b0e;
         color: #dedbd4;
         font-family: Georgia, "Times New Roman", serif;
         text-align: center;
       }
-      main { max-width: 34rem; }
-      img { width: 72px; height: 72px; border-radius: 16px; }
+      main {
+        max-width: 34rem;
+      }
+      img {
+        width: 72px;
+        height: 72px;
+        border-radius: 16px;
+      }
       h1 {
         margin: 24px 0 8px;
         font-size: clamp(1.6rem, 6vw, 2.4rem);
@@ -38,14 +47,26 @@
         text-transform: uppercase;
         color: #e2c46c;
       }
-      p { margin: 0 0 12px; line-height: 1.6; color: #b4b4b8; font-family: system-ui, sans-serif; }
+      p {
+        margin: 0 0 12px;
+        line-height: 1.6;
+        color: #b4b4b8;
+        font-family: system-ui, sans-serif;
+      }
       hr {
         width: min(320px, 70%);
         height: 3px;
         margin: 28px auto;
         border: 0;
         border-radius: 3px;
-        background: linear-gradient(90deg, transparent, #5f8fb0 14%, #bcdcf0 50%, #5f8fb0 86%, transparent);
+        background: linear-gradient(
+          90deg,
+          transparent,
+          #5f8fb0 14%,
+          #bcdcf0 50%,
+          #5f8fb0 86%,
+          transparent
+        );
       }
       a {
         display: inline-block;
@@ -61,18 +82,27 @@
         text-transform: uppercase;
         text-decoration: none;
       }
-      a:focus-visible { outline: 2px solid #e8d48b; outline-offset: 3px; }
+      a:focus-visible {
+        outline: 2px solid #e8d48b;
+        outline-offset: 3px;
+      }
     </style>
   </head>
   <body>
     <main>
       <img src="/icons/icon-192.png" alt="" />
       <h1>Нет соединения</h1>
-      <p>Эта страница ещё не сохранена на устройстве. Страницы, которые вы уже открывали, доступны и без интернета.</p>
+      <p>
+        Эта страница ещё не сохранена на устройстве. Страницы, которые вы уже открывали, доступны и
+        без интернета.
+      </p>
       <a href="/">Попробовать снова</a>
       <hr />
       <h1 lang="en">You are offline</h1>
-      <p lang="en">This page has not been saved on your device yet. Pages you have already opened work without a connection.</p>
+      <p lang="en">
+        This page has not been saved on your device yet. Pages you have already opened work without
+        a connection.
+      </p>
       <a href="/" lang="en">Try again</a>
     </main>
   </body>
