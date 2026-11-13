@@ -15,18 +15,27 @@ export function SiteHeader({ locale, dict }: { locale: Locale; dict: Dictionary 
 
   return (
     <header className="site-header sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur">
-      <div className="mx-auto flex min-h-[72px] w-full max-w-[1440px] flex-wrap items-center justify-between gap-x-8 gap-y-2 px-4 py-2 md:px-8 lg:min-h-[92px] lg:flex-nowrap lg:px-12">
+      {/*
+        Phone: two rows. Row 1 = name + language + theme, row 2 = menu spread over the full width.
+        From 1024 px: one row (name, menu, language, theme). `order` swaps the blocks per screen size.
+      */}
+      <div className="mx-auto flex w-full max-w-[1440px] flex-wrap items-center gap-x-8 gap-y-1 px-4 pb-1 pt-2 md:px-8 lg:min-h-[92px] lg:flex-nowrap lg:py-2 lg:px-12">
         <Link
           href={localizedPath(locale, "/")}
-          className="metal-thin whitespace-nowrap rounded-md font-display text-xl font-bold uppercase tracking-[0.12em] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring lg:text-[26px] xl:text-[32px]"
+          className="metal-thin order-1 whitespace-nowrap rounded-md font-display text-[17px] font-bold sm:text-xl uppercase tracking-[0.12em] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring lg:text-[26px] xl:text-[32px]"
         >
           {siteConfig.name}
         </Link>
-        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 lg:flex-nowrap lg:gap-x-8">
-          <NavLinks items={items} label={dict.nav.main} homeHref={localizedPath(locale, "/")} />
+        <div className="order-2 ml-auto flex items-center gap-1 lg:order-3 lg:ml-0 lg:gap-6">
           <LanguageSwitcher current={locale} label={dict.nav.language} />
           <ThemeToggle label={dict.nav.themeToggle} />
         </div>
+        <NavLinks
+          items={items}
+          label={dict.nav.main}
+          homeHref={localizedPath(locale, "/")}
+          className="order-3 w-full border-t border-border/60 lg:order-2 lg:ml-auto lg:w-auto lg:border-t-0"
+        />
       </div>
     </header>
   );

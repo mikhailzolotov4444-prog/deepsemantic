@@ -10,6 +10,7 @@ interface NavLinksProps {
   readonly label: string;
   /** Path of the home page, e.g. "/ru": it is "current" only on an exact match. */
   readonly homeHref: string;
+  readonly className?: string;
 }
 
 /** Classes shared by every menu link (header, language switch, footer). */
@@ -19,12 +20,12 @@ export const menuLinkClass = cn(
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
 );
 
-export function NavLinks({ items, label, homeHref }: NavLinksProps) {
+export function NavLinks({ items, label, homeHref, className }: NavLinksProps) {
   const pathname = usePathname();
 
   return (
-    <nav aria-label={label}>
-      <ul className="flex flex-wrap items-center gap-x-1 gap-y-1 lg:flex-nowrap lg:gap-x-6 xl:gap-x-10">
+    <nav aria-label={label} className={className}>
+      <ul className="flex items-center justify-between gap-x-2 sm:justify-center sm:gap-x-10 lg:justify-start lg:gap-x-6 xl:gap-x-10">
         {items.map((item) => {
           const isCurrent =
             item.href === homeHref ? pathname === homeHref : pathname.startsWith(item.href);
